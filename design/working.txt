@@ -1,0 +1,124 @@
+Booting Process:
+
+First Stage Boot Program:
+ 	Check for virtual mode
+	Load the Second Stage Boot Program
+
+Second Stage Boot Program:
+	Move to Protected Mode
+	Setup Global Descriptor Table
+	Load Disk Driver
+	Load Third Stage Boot Program
+	
+Third Stage Boot Program:
+	Load File Manager
+	Initialise File Manager
+	Load Default File System
+	Initialise Default File System
+	Load System Support Drivers
+	Load System Control Module
+	Load Memory Manager
+	Load Paging System
+	Initialise Memory Manager
+	Load Task Manager
+	Initialise Task Manager
+	Load Scheduler
+	Reinitialise Task Manager
+	Initialise System Control Module
+
+System Control Module:
+	Poll the components
+	Load Explorer
+	Run init program
+	Wait…
+	
+
+
+
+
+
+
+
+
+
+
+Description of Components:
+
+First Stage Boot Loader:
+	Check for Virtual 8086 mode
+	Load root directory into memory
+	Search for the Second Stage Boot Loader
+	Load FAT12 into memory
+	Load Second Stage Boot Loader into memory
+	Execute Second Stage Boot Loader
+
+Second Stage Boot Loader:
+	Check CPU
+	Clear Keyboard Buffer
+	Setup GDT
+	Move to Protected Mode
+	Setup IDT
+	Load Disk Driver Program into memory
+	Search for Third Stage Boot Loader
+	Load Third Stage Boot Loader into memory
+
+<* For Hard Disk, the First and Second Stage Boot Loaders are combined *>
+
+Third Stage Boot Loader:
+	Load File System
+  	With the file system load other components
+
+Disk Driver:
+	Do basic disk operations
+	Disks may be Floppy Disk of different types, any type of hard disk.
+The Disk Driver can have disk buffer in the lower memory to cache disk contents.
+All the disk operations will be done only through Disk Driver
+
+File Manager:
+	File Manager will get the physical and logical drives available in the system.
+	It controls all the file access functions not worrying about file system type.
+	It finds and assigns file systems to different drives.
+	All the file operations are done with File Manager.
+
+File System:
+Each file system will need to do some basic operations required by the File Manager.
+The File Manager will not interrupt in its process.
+The logical structure of a file is controlled by its file system.
+Support Drivers:
+	It contains the coding for interrupt and event handling.
+	It also contains drivers for all peripheral devices.
+
+Memory Manager:
+	It controls the entire memory.
+	It assigns memory for all the processes
+	It is responsible for memory bank.
+
+Paging System:
+	It supports in memory management.
+	It swaps pages in and out of main memory using swap gates in File Manager.
+
+Task Manager:
+	It is responsible for all tasks.
+	It can only create, pause or terminate a task.
+
+Scheduler:
+	Scheduler is a system task
+	It is initialised with Task Manager. 
+	Task Manager can control it, but cannot terminate it.
+
+System Control Module:
+	This is the heart of the operating system.
+	It initialises itself with certain environment values.
+	It first polls all the system components with their test code.
+	It gets list of system components and hardware components.
+	It can terminate any system process.
+	It can only shut down the system.
+	Control the system, when error occurs.
+	Perform Power Management.
+	Create log files
+	Perform Authentication
+	Load Explorer (System Interface).
+	Load and run init program.
+	Wait for user interrupt…
+	
+
